@@ -6,7 +6,7 @@
 ## 状態（2026-09-21）
 
 **コラボ機能を一通り実装し、php -S + SQLite でユーザー 3 人（作者・共同執筆者→閲覧者・部外者）の権限を curl で検証済み。**
-未コミット（`git status` で新規・変更ファイルを確認）。リモート未設定。
+GitHub: https://github.com/ICTCacao/ScenarioWriterCafeCollab（private）。コミット・push 済み。
 
 ## 実装したもの
 
