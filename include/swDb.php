@@ -186,6 +186,21 @@ class swPdoStatementSqlite extends PDOStatement {
 			$v = $info['ref'];
 			parent::bindValue($p, $v, self::swFixType($v, $info['type']));
 		}
+		//複数人が同時に書き込むと busy_timeout 内でも "database is locked"(SQLITE_BUSY=5) で返ることがある
+		//（コラボレーション版: 在席更新と編集が重なる）。少し待って最大 5 回やり直す。
+		for ($try = 0; $try < 5; $try++) {
+			$ok = @parent::execute($params);
+			if ($ok) { return true; }
+			$err = $this->errorInfo();
+			$busy = (isset($err[1]) && ((int)$err[1] === 5 || (int)$err[1] === 6)) || (isset($err[2]) && stripos((string)$err[2], 'locked') !== false);
+			if (!$busy) { break; }
+			//失敗した文は sqlite3_reset しないと、次の execute で PDO がパラメータを bind し直す時点で
+			// SQLITE_MISUSE(21) になる。closeCursor が reset に当たる。
+			parent::closeCursor();
+			usleep(mt_rand(20000, 80000) * ($try + 1));
+		}
+		//やり直しても駄目なら従来どおり（ERRMODE に従って警告/例外）
+		parent::closeCursor();
 		return parent::execute($params);
 	}
 
@@ -228,12 +243,17 @@ class swPdoStatementSqlite extends PDOStatement {
 
 	#[\ReturnTypeWillChange]
 	public function fetch($mode = 0, $cursorOrientation = PDO::FETCH_ORI_NEXT, $cursorOffset = 0){
+		//SELECT は最初の fetch で結果を全部読み切る（コラボレーション版で変更）。
+		//  1 行だけ fetch して途中で止めると読み取りトランザクションが開いたままになり、WAL では同じ接続の
+		//  次の UPDATE/INSERT が「database is locked」で即失敗する（busy_timeout も効かない）。
+		if ($this->swBuf === null && $this->columnCount() > 0) { $this->swFill(); }
 		if ($this->swBuf === null) { return parent::fetch($mode, $cursorOrientation, $cursorOffset); }
 		if ($this->swPos >= count($this->swBuf)) { return false; }
 		return $this->swConv($this->swBuf[$this->swPos++], $mode);
 	}
 
 	public function fetchAll($mode = 0, ...$args): array {
+		if ($this->swBuf === null && $this->columnCount() > 0 && count($args) === 0 && ($mode === 0 || $mode === PDO::FETCH_ASSOC || $mode === PDO::FETCH_NUM || $mode === PDO::FETCH_BOTH || $mode === PDO::FETCH_OBJ)) { $this->swFill(); }
 		if ($this->swBuf === null) { return parent::fetchAll($mode, ...$args); }
 		$rest = array_slice($this->swBuf, $this->swPos);
 		$this->swPos = count($this->swBuf);
@@ -244,6 +264,7 @@ class swPdoStatementSqlite extends PDOStatement {
 
 	#[\ReturnTypeWillChange]
 	public function fetchColumn($column = 0){
+		if ($this->swBuf === null && $this->columnCount() > 0) { $this->swFill(); }
 		if ($this->swBuf === null) { return parent::fetchColumn($column); }
 		$row = $this->fetch(PDO::FETCH_NUM);
 		if ($row === false) { return false; }

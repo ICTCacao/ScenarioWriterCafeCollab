@@ -8,6 +8,10 @@
 // ------------------------------------------------------------------------------
 	include_once("../sw_config/swConstant.php");
 	include_once("../include/ConnectMySQL.php");
+	//共同執筆: 状態の確認は閲覧者も可、公開・停止・作り直しは作者のみ（JSON で拒否を返す）
+	$swCollabNeed = (isset($_POST['SubMode']) && $_POST['SubMode'] !== 'Status') ? 'owner' : 'read';
+	$swCollabDenyJson = true;
+	include_once("../include/swCollabGuard.php");
 	include_once("../include/swFunc.php");
 	include_once("../include/swPreview.php");
 	include_once("../class/clsSwUserLoginInfo.php");
@@ -25,10 +29,8 @@
 	$li->clsSwUserLoginInfoInit($mySqlConnObj, $loginId);
 	$userId = (int)$li->clsSwUserLoginInfoGetUserId();
 	if ($loginId === '' || $userId <= 0) { out(false, 0, '', 'ログインしてください。'); }
-	//シナリオの持ち主か
-	$sc = new clsSwScenario();
-	$sc->clsSwScenarioInit($mySqlConnObj, $scenarioId);
-	if ($scenarioId <= 0 || (int)$sc->clsSwScenarioGetUserId() !== $userId) { out(false, 0, '', 'このシナリオは操作できません。'); }
+	//シナリオの権限はガード（swCollabGuard.php）で確認済み
+	if ($scenarioId <= 0) { out(false, 0, '', 'このシナリオは操作できません。'); }
 
 	switch ($SubMode) {
 		case 'Enable':

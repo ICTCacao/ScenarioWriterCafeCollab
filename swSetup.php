@@ -31,7 +31,7 @@
 	<meta name="robots" content="noindex, nofollow">
 	<title>ScenarioWriterCafe 初期設定</title>
 	<link rel="shortcut icon" href="./img/icon/favicon.ico" type="image/x-icon">
-	<link rel="stylesheet" type="text/css" href="./css/scwDefault.css?v=20260918">
+	<link rel="stylesheet" type="text/css" href="./css/scwDefault.css?v=20260921c">
 	<link rel="stylesheet" type="text/css" href="./css/scwUserStyle.css?v=20260918">
 </head>
 <body>

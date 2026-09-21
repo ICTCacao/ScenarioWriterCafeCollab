@@ -12,6 +12,9 @@
 	include_once("../sw_config/swConstant.php");
 	//DB接続ｸﾗｽの初期化
 	include_once("../include/ConnectMySQL.php");
+	//共同執筆: 権限ガード（編集）
+	$swCollabNeed = 'edit';
+	include_once("../include/swCollabGuard.php");
 // ------------------------------------------------------------------------------
 	//共通関数をｲﾝｸﾙｰﾄﾞ
 	include_once("../include/swFunc.php");

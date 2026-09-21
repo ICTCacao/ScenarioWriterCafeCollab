@@ -27,7 +27,7 @@ print <<<END_OF_HTML
     <link rel="apple-touch-icon" sizes="114x114" href="./img/icon/apple-touch-icon-114x114.png">
 	
 	<!-- Bootstrap -->
-	<link href="css/scwDefault.css?v=20260918" rel="stylesheet">
+	<link href="css/scwDefault.css?v=20260921c" rel="stylesheet">
 	<link href="css/scwUserStyle.css?v=20260918" rel="stylesheet">
 	
 	<!-- site style -->

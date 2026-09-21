@@ -26,6 +26,9 @@
   //ｾｯｼｮﾝ管理
   include_once("./include/swAccept.php");
   include_once("./include/swCheckAdmin.php");
+  //共同執筆: 権限ガード（閲覧）
+  $swCollabNeed = 'read';
+  include_once("./include/swCollabGuard.php");
 
   //シナリオIDが無いまま進むと ./tmp/ 自体を複写先にして最後に丸ごと削除してしまうので止める
   if($fdtScenarioId == ''){ exit('シナリオIDがありません'); }

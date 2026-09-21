@@ -51,16 +51,40 @@ function swMenuBar_Print($menuFile, $TargetForm, $title, $actions, $userName = '
 	}
 	$userHtml = htmlspecialchars((string)$userName, ENT_QUOTES, 'UTF-8');
 
+	//共同執筆（コラボレーション版）: 役割バッジ・在席表示・他の人の更新通知バー。シナリオに紐付く画面だけ
+	$collabRole = defined('SW_COLLAB_ROLE') ? SW_COLLAB_ROLE : '';
+	$collabSid = defined('SW_COLLAB_SCENARIO_ID') ? (int)SW_COLLAB_SCENARIO_ID : 0;
+	$roleHtml = '';
+	$collabHtml = '';
+	$collabScript = '';
+	if($collabSid > 0 && $collabRole !== ''){
+		include_once(__DIR__ . '/swCollab.php');
+		$myTitle = '';
+		if ($collabRole !== 'owner' && defined('SW_COLLAB_USER_ID')) {
+			foreach (swCollab_Members($GLOBALS['mySqlConnObj'], $collabSid) as $m) { if ($m['id'] === (int)SW_COLLAB_USER_ID) { $myTitle = $m['title']; break; } }
+		}
+		$roleHtml = '<span class="sw-role-badge ' . $collabRole . '" title="このシナリオでのあなたの役割（' . swCollab_LevelLabel($collabRole) . '）">' . htmlspecialchars(swCollab_MemberLabel($collabRole, $myTitle), ENT_QUOTES, 'UTF-8') . '</span>';
+		$collabHtml = '<span class="sw-mb-presence" id="swCollabPresence"></span>';
+		$loginJs = json_encode(isset($GLOBALS['fdtUserLoginId']) ? (string)$GLOBALS['fdtUserLoginId'] : '');
+		$pageJs = json_encode(basename(isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : ''));
+		$formJs = json_encode((string)$TargetForm);
+		$collabScript = '<div class="sw-collab-bar" id="swCollabBar"></div>'
+			. '<script type="text/javascript" src="./ajax/ajaxSwCollab.js?v=20260921c"></script>'
+			. '<script>swCollab_start({scenarioId: ' . $collabSid . ', loginId: ' . $loginJs . ', page: ' . $pageJs . ', form: ' . $formJs . '});</script>';
+	}
+
 	print <<<END_OF_HTML
 
 	<div class="sw-menubar">
 		<div class="sw-mb-left">
 			{$dropdown}
 			<span class="sw-mb-title" title="{$title}">{$title}</span>
+			{$roleHtml}
 		</div>
-		<div class="sw-mb-actions">{$actHtml}</div>
+		<div class="sw-mb-actions">{$actHtml}{$collabHtml}</div>
 		<div class="sw-mb-user" title="{$userHtml}">{$userHtml}</div>
 	</div>
+	{$collabScript}
 
 END_OF_HTML;
 }

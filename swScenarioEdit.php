@@ -16,6 +16,9 @@
 	include_once("./include/swAccept.php");
 	//管理者チェック
 	include_once("./include/swCheckAdmin.php");
+	//共同執筆: 権限ガード（編集）
+	$swCollabNeed = 'edit';
+	include_once("./include/swCollabGuard.php");
 // ------------------------------------------------------------------------------
 	//ﾃﾞﾌｫﾙﾄｱｸｼｮﾝ
 	$ThisPHP = 'swScenarioEdit.php';
@@ -187,6 +190,10 @@ END_OF_HTML;
 	<script type="text/javascript" src="./ajax/ajaxSwScenarioEdit.js"></script>
 	<script language="JavaScript">
 		fncReadScenarioLinesOfScene(frmSwScenario)
+	</script>
+	<script>
+		//共同執筆: 他の人の更新通知の「再読み込み」は、画面全体ではなく今の場面の表示だけ読み直す
+		window.swCollab_refresh = function(){ fncReadScenarioLinesOfScene(frmSwScenario); };
 	</script>
 	
 	<!--footer表示位置--><span class="sw-footer"></span>

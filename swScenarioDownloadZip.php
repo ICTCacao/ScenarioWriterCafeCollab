@@ -25,6 +25,9 @@
 	//ｾｯｼｮﾝ管理
 	include_once("./include/swAccept.php");
 	include_once("./include/swCheckAdmin.php");
+	//共同執筆: 権限ガード（閲覧）
+	$swCollabNeed = 'read';
+	include_once("./include/swCollabGuard.php");
 
 	//MainProcedure
 	fncMainProc($mySqlConnObj);

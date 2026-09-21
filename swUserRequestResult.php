@@ -58,7 +58,7 @@ function fncMainProc(){
     <title>ScenarioWriterCafe</title>
 	<link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
 		<!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" type="text/css" href="./css/scwDefault.css?v=20260918">
+    <link rel="stylesheet" type="text/css" href="./css/scwDefault.css?v=20260921c">
     <link rel="stylesheet" type="text/css" href="./css/scwUserStyle.css?v=20260918">
 		
 		<!-- Custom CSS -->

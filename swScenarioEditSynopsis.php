@@ -21,6 +21,9 @@
   include_once("./include/swAccept.php");
   //管理者チェック
   include_once("./include/swCheckAdmin.php");
+  //共同執筆: 権限ガード（編集）
+  $swCollabNeed = 'edit';
+  include_once("./include/swCollabGuard.php");
 // ------------------------------------------------------------------------------
   //ﾃﾞﾌｫﾙﾄｱｸｼｮﾝ
   $ThisPHP = 'swScenarioEditSynopsis.php';

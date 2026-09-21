@@ -17,6 +17,9 @@
   include_once("./include/swAccept.php");
   //管理者チェック
   include_once("./include/swCheckAdmin.php");
+  //共同執筆: 権限ガード（編集）
+  $swCollabNeed = 'edit';
+  include_once("./include/swCollabGuard.php");
 // ------------------------------------------------------------------------------
   //ﾃﾞﾌｫﾙﾄｱｸｼｮﾝ
   $ThisPHP = 'swScenarioEditInfo.php';
@@ -138,12 +141,17 @@ END_OF_HTML;
   $mbActions = array(
     array('label'=>'シナリオ情報更新', 'onclick'=>"fncSwScenarioSubmit(frmSwScenario,'UPDATE','TRUE','シナリオ情報更新');"),
   );
+  //コラボ制作: 複写・削除はプロデューサーだけ
+  $swIsOwner = (defined('SW_COLLAB_ROLE') && SW_COLLAB_ROLE === 'owner');
   if(SW_GUEST){
     $mbActions[] = array('label'=>'シナリオ複写', 'disabled'=>true, 'note'=>'お試しログインでは複写機能は使用できません');
+  }elseif(!$swIsOwner){
+    $mbActions[] = array('label'=>'シナリオ複写', 'disabled'=>true);
+    $mbActions[] = array('label'=>'シナリオ削除', 'disabled'=>true, 'note'=>'複写・削除はプロデューサーだけができます');
   }else{
     $mbActions[] = array('label'=>'シナリオ複写', 'onclick'=>"fncSwScenarioSubmitCopy(frmSwScenario);");
+    $mbActions[] = array('label'=>'シナリオ削除', 'onclick'=>"fncSwScenarioSubmitDelete(frmSwScenario);", 'class'=>'danger');
   }
-  $mbActions[] = array('label'=>'シナリオ削除', 'onclick'=>"fncSwScenarioSubmitDelete(frmSwScenario);", 'class'=>'danger');
 	include_once("./include/swMenuBar.php");
   swMenuBar_Print('./include/swEditDropDownMenu.php', 'frmSwScenario', $fdtScenarioTitle, $mbActions, $fdtUserName);
   print <<<END_OF_HTML

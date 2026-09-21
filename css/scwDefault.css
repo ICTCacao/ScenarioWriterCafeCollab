@@ -2095,3 +2095,24 @@ label{
     padding: 22% 10%;
 }
 }
+
+/* 共同執筆（コラボレーション版で追加） */
+.sw-card { position: relative; }
+.sw-card-role { position: absolute; top: 4px; right: 4px; font-size: 10px; line-height: 1; padding: 3px 6px; border-radius: 8px; color: #fff; background-color: #6c757d; }
+.sw-card-role.owner { background-color: #f7931e; }
+.sw-card-role.editor { background-color: #198754; }
+.sw-card-role.reader { background-color: #6c757d; }
+.sw-collab-bar { display: none; margin: -8px -25px 10px; padding: 5px 25px; background-color: #fff3cd; border-bottom: 1px solid #ffe69c; color: #664d03; font-size: 13px; }
+.sw-collab-bar a { color: #0d6efd; cursor: pointer; margin-left: 8px; text-decoration: underline; }
+.sw-collab-bar .sw-collab-close { float: right; cursor: pointer; color: #664d03; text-decoration: none; }
+.sw-mb-presence { color: #9fe3b4; font-size: 12px; margin-left: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sw-role-badge { display: inline-block; font-size: 11px; line-height: 1; padding: 4px 7px; border-radius: 8px; color: #fff; background-color: #6c757d; vertical-align: middle; }
+.sw-role-badge.owner { background-color: #f7931e; }
+.sw-role-badge.editor { background-color: #198754; }
+.sw-role-badge.reader { background-color: #6c757d; }
+.sw-member-table td, .sw-member-table th { vertical-align: middle; font-size: 13px; }
+.sw-activity { font-size: 13px; }
+.sw-activity li { padding: 3px 0; border-bottom: 1px dotted #ddd; }
+.sw-activity .sw-act-date { color: #888; margin-right: 8px; font-size: 12px; }
+.sw-activity .sw-act-user { font-weight: bold; margin-right: 6px; }
+.sw-activity .sw-act-note { color: #666; margin-left: 6px; }

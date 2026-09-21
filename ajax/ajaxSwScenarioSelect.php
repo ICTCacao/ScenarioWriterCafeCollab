@@ -15,6 +15,8 @@
 // ------------------------------------------------------------------------------
 	//共通関数をｲﾝｸﾙｰﾄﾞ
 	include_once("../include/swFunc.php");
+	//共同執筆
+	include_once("../include/swCollab.php");
 	//ﾌｫｰﾑのﾃﾞｰﾀを読み込む
 	fncGetPostItems();
 
@@ -103,26 +105,18 @@ function fncMakeSwScenarioList($mySqlConnObj){
 	//ﾌﾟﾛﾊﾟﾃｨGet
 	$fdtUserId = $clsSwUserLoginInfo->clsSwUserLoginInfoGetUserId();                    //USER_ID
 	
-	//DB から ﾃﾞｰﾀを取得しﾌﾟﾛﾊﾟﾃｨにｾｯﾄする
-	$strSQL = <<<END_OF_SQL
-		SELECT * FROM SW_SCENARIO
-			WHERE USER_ID = :UserId
-					ORDER BY SCENARIO_DATE DESC;
-END_OF_SQL;
-	$stmt = $mySqlConnObj->prepare($strSQL);
-	$stmt->setFetchMode(PDO::FETCH_ASSOC);
-	//パラメータのセット
-	$stmt->bindParam(':UserId', $fdtUserId, PDO::PARAM_STR);
-	$stmt->execute();
+	//共同執筆: 自分のシナリオ＋共有されたシナリオ（MEMBER_ROLE 付き。更新日の新しい順）
+	if ((int)$fdtUserId <= 0) { return ''; }
+	$rows = swCollab_ScenarioList($mySqlConnObj, (int)$fdtUserId);
 	//件数取得
-	$myRowCnt = $stmt->rowCount();
+	$myRowCnt = count($rows);
 	if($myRowCnt == 0 ){
 		$retHtml = <<<END_OF_HTML
 		
 		<div class="jumbotron">
 			<p>&nbsp;</p>
 			
-			<p><h4>保存されたシナリオはありません。</h4></p>
+			<p><h4>保存されたシナリオ・共有されたシナリオはありません。</h4></p>
 			<p>&nbsp;<p>
 			<p><h4>新規にシナリオを作成する場合は、メニューから新規シナリオをクリックしてください。</h4><p>
 			
@@ -152,12 +146,16 @@ END_OF_HTML;
 		}
 
 		
-		while($myRow = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+		foreach($rows as $myRow) {
 			$valScenarioId = $myRow['SCENARIO_ID'];
-			$valScenarioTitle = $myRow['SCENARIO_TITLE'];
-			$valScenarioSubTitle = $myRow['SCENARIO_SUBTITLE'];
+			$valScenarioTitle = swFunc_SanitizeStrings($myRow['SCENARIO_TITLE']);
+			$valScenarioSubTitle = swFunc_SanitizeStrings($myRow['SCENARIO_SUBTITLE']);
 			$valScenarioDate = $myRow['SCENARIO_DATE'];
-			$valScenarioId = $myRow['SCENARIO_ID'];
+			//役割（プロデューサー / 役割名）。閲覧のみのカードは「シナリオを読む」へ
+			$valRole = (string)$myRow['MEMBER_ROLE'];
+			if ($valRole !== 'owner' && $valRole !== 'editor') { $valRole = 'reader'; }
+			$valRoleLabel = swFunc_SanitizeStrings(swCollab_MemberLabel($valRole, isset($myRow['MEMBER_TITLE']) ? $myRow['MEMBER_TITLE'] : ''));
+			$valOnClick = ($valRole === 'reader') ? "fncSelectSwScenarioView(frmSwScenario,'$valScenarioId');" : "fncSelectSwScenario(frmSwScenario,'$valScenarioId');";
 
 			if(isset($imgArray[$valScenarioId])){
 				$imgFile = $dir.$imgArray[$valScenarioId];
@@ -171,7 +169,8 @@ END_OF_HTML;
 			//ﾘｽﾄ（カード: 左 30% 画像・右 70% タイトル）
 			$retHtml .= <<<END_OF_HTML
 				<div class="col">
-					<div class="item sw-card" onclick="fncSelectSwScenario(frmSwScenario,'$valScenarioId');">
+					<div class="item sw-card" onclick="$valOnClick">
+						<span class="sw-card-role $valRole">$valRoleLabel</span>
 						<div class="sw-card-img"><img src="$imgSrcPath" alt=""></div>
 						<div class="sw-card-body">
 							<p class="sw-card-title">$valScenarioTitle</p>

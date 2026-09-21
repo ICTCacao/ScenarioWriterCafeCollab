@@ -20,7 +20,7 @@ print <<<END_OF_HTML
 	<link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
 	
 	<!-- Bootstrap -->
-	<link href="css/scwDefault.css?v=20260918" rel="stylesheet">
+	<link href="css/scwDefault.css?v=20260921c" rel="stylesheet">
 	<link href="css/scwUserStyle.css?v=20260918" rel="stylesheet">
 	<!-- site style -->
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

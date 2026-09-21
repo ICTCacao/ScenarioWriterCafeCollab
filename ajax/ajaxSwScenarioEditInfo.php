@@ -12,6 +12,9 @@
 	include_once("../sw_config/swConstant.php");
 	//DB接続ｸﾗｽの初期化
 	include_once("../include/ConnectMySQL.php");
+	//共同執筆: 権限ガード。削除・複写は作者のみ、それ以外（情報更新・画像）は共同執筆者も可
+	$swCollabNeed = (isset($_POST['SubmitMode']) && in_array($_POST['SubmitMode'], array('DELETE', 'COPY'), true)) ? 'owner' : 'edit';
+	include_once("../include/swCollabGuard.php");
 // ------------------------------------------------------------------------------
 	//共通関数をｲﾝｸﾙｰﾄﾞ
 	include_once("../include/swFunc.php");
@@ -59,6 +62,11 @@ function fncGetPostItems($mySqlConnObj){
 	$clsSwUserLoginInfo->clsSwUserLoginInfoInit($mySqlConnObj,$fdtUserLoginId);
 	//ﾌﾟﾛﾊﾟﾃｨGet
 	$fdtUserId = $clsSwUserLoginInfo->clsSwUserLoginInfoGetUserId();                    //USER_ID
+	//共同執筆: 共同執筆者が情報更新しても作者(SW_SCENARIO.USER_ID)は変えない
+	if (isset($_POST['fdtScenarioId']) && (string)$_POST['fdtScenarioId'] !== '') {
+		$swOwner = swCollab_OwnerId($mySqlConnObj, (int)str_replace(',', '', (string)$_POST['fdtScenarioId']));
+		if ($swOwner > 0) { $fdtUserId = $swOwner; }
+	}
 
 	//処理ﾓｰﾄが空白ならreturnするﾞ
 	if(!isset($_POST['SubmitMode'])){return;}
@@ -212,6 +220,8 @@ function fncMainProc($mySqlConnObj){
 		case 'DELETE':
 			//削除処理
 			fncSwScenarioDBDelete($mySqlConnObj,$clsSwScenario);
+			//共同執筆: メンバー・招待・履歴・在席も消す
+			swCollab_PurgeScenario($mySqlConnObj, (int)str_replace(',', '', (string)$fdtScenarioId));
 			$resultHtml = 'DELETE';
 			break;
 		case 'COPY':

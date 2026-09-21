@@ -53,3 +53,16 @@ function fncSelectSwScenario(frm,valScenarioId){
     frm.submit();
 
 }
+// ------------------------------------------------------------------------------
+//		Scenario 選択（閲覧者）　ScenarioView起動（コラボレーション版で追加）
+// ------------------------------------------------------------------------------
+function fncSelectSwScenarioView(frm,valScenarioId){
+
+	$('#fdtScenarioId').val(valScenarioId);
+	$('#SubmitMode').val('SELECT');
+
+    frm.action = "./swScenarioView.php";
+    frm.target = "_self";
+    frm.submit();
+
+}
