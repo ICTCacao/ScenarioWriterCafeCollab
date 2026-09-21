@@ -425,7 +425,9 @@ Word 2007 以降、または互換ソフトで開けます
 <!-- _class: lead -->
 <!-- _paginate: false -->
 
-# 楽しい執筆を。
+# ScenarioWriterCafe
 
-ScenarioWriterCafe　MIT License
-https://github.com/ICTCacao/ScenarioWriterCafe
+MIT License
+
+標準版　https://github.com/ICTCacao/ScenarioWriterCafe
+コラボレーション版　https://github.com/ICTCacao/ScenarioWriterCafeCollab

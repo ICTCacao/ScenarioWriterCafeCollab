@@ -1,6 +1,6 @@
 # ScenarioWriterCafe（コラボレーション版）
 
-舞台・映像の脚本を Web ブラウザで書くための脚本エディタです。この「コラボレーション版」は、ひとり用の ScenarioWriterCafe に **複数人での共同執筆** を足した派生版です。
+舞台・映像の脚本を Web ブラウザで書くための脚本エディタです。この「コラボレーション版」は、ひとり用の [ScenarioWriterCafe（標準版）](https://github.com/ICTCacao/ScenarioWriterCafe) に **複数人でのコラボ制作** を足した派生版です。リポジトリ: https://github.com/ICTCacao/ScenarioWriterCafeCollab
 PHP と SQLite だけで動くので、レンタルサーバや手元の PC にフォルダを置くだけで始められます。
 
 **脚本家向けの操作マニュアル → [docs/manual.md](docs/manual.md)**
