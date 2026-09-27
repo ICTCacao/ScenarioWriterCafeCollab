@@ -51,6 +51,15 @@ GitHub: https://github.com/ICTCacao/ScenarioWriterCafeCollab（private）。コ�
   メンバー・招待は役割名を持つ（`MEMBER_TITLE` / `INVITE_TITLE`。既存表には自動 ALTER）。表示は役割名、権限は「編集できる / 閲覧のみ」。
 - API: Members が roles を返す。AddMember/SetRole/CreateInvite は roleId。AddRole/DeleteRole を追加。RemoveMember の自己退出は廃止。
 
+## アプリアイコン（2026-09-21）
+
+- 元データは `img/icon/icon.svg`（1024 角。原稿用紙にかな風の筆跡＋コーヒーカップ。ブランド色 #f7931e 系のグラデーション）。
+- 生成物: `icon-1024.png` `icon-512.png` `icon-192.png`（角丸・透過）、`apple-touch-icon.png`(180) `-114x114` `-72x72`（角丸なし。iOS が角を丸める）、`favicon.ico`(48/32/16)。
+- 再生成: ImageMagick の SVG 描画はグラデーションや線が抜けるので使わない。Chrome ヘッドレスで描く:
+  `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --hide-scrollbars --default-background-color=00000000 --window-size=1024,1024 --screenshot=out.png file:///.../wrap.html`
+  （wrap.html は body 余白 0 で SVG を 1024px に置いたもの）。その PNG を `magick` で各サイズに縮小し、`-define icon:auto-resize=48,32,16` で ico。
+- 全ヘッダ（swHeader 3 本、ログイン、初期設定、招待、プレビュー、リクエスト結果）に favicon / icon-192 / apple-touch-icon(180) のリンクを入れた。
+
 ## 残課題・気づき
 
 - MAMP の `http://scenariowritercafecollab/` でも動作確認する（本人）。

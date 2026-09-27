@@ -17,7 +17,9 @@ print <<<END_OF_HTML
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<title>$HtmlTitle</title>
-	<link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
+	<link rel="shortcut icon" href="./img/icon/favicon.ico" type="image/x-icon">
+	<link rel="icon" type="image/png" sizes="192x192" href="./img/icon/icon-192.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="./img/icon/apple-touch-icon.png">
 	
 	<!-- Bootstrap -->
 	<link href="css/scwDefault.css?v=20260921c" rel="stylesheet">

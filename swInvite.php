@@ -110,6 +110,8 @@ END_OF_HTML;
 <meta name="robots" content="noindex, nofollow">
 <title>コラボ制作への招待 - ScenarioWriterCafe</title>
 <link rel="shortcut icon" href="./img/icon/favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="192x192" href="./img/icon/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./img/icon/apple-touch-icon.png">
 <link rel="stylesheet" type="text/css" href="./css/scwDefault.css?v=20260921c">
 <link rel="stylesheet" type="text/css" href="./css/scwUserStyle.css?v=20260918">
 <style>

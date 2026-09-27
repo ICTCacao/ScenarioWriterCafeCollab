@@ -56,7 +56,9 @@ function fncMainProc(){
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>ScenarioWriterCafe</title>
-	<link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
+	<link rel="shortcut icon" href="./img/icon/favicon.ico" type="image/x-icon">
+	<link rel="icon" type="image/png" sizes="192x192" href="./img/icon/icon-192.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="./img/icon/apple-touch-icon.png">
 		<!-- Bootstrap Core CSS -->
     <link rel="stylesheet" type="text/css" href="./css/scwDefault.css?v=20260921c">
     <link rel="stylesheet" type="text/css" href="./css/scwUserStyle.css?v=20260918">
