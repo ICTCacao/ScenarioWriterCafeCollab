@@ -203,6 +203,22 @@ END_OF_HTML;
                   <div class="row row-0">
                       <div class="col-sm-3">
                           <button type="button" class="btn btn-outline-secondary btn-lg" aria-label="Left Align"
+                            onClick="AjaxFunc_DounloadMenuJump(frmSwScenario,'./swScenarioDownloadScwd.php','');">
+                            <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>
+                            作品ファイル.scwd
+                          </button>
+                      </div>
+                      <div class="col-sm-8">
+                          <p class="caption">
+                            　scwdは、ScenarioWriterSolo（Mac 版・Windows 版）で開ける作品ファイルです。
+                            作品情報・シノプシス・登場人物・場面・台詞・作品画像と、スタイル設定・文字数をまとめて書き出します。
+                            メニューの「作品ファイル(.scwd)を読み込む」で、この Web 版にも読み込めます。
+                          </p>
+                      </div>
+                  </div>
+                  <div class="row row-0">
+                      <div class="col-sm-3">
+                          <button type="button" class="btn btn-outline-secondary btn-lg" aria-label="Left Align"
                             onClick="AjaxFunc_DounloadMenuJump(frmSwScenario,'./swScenarioDownloadDocx.php','A4TP');">
                             <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>A4縦 縦書き.docx
                           </button>
