@@ -18,6 +18,7 @@ if(SW_GUEST){
       <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swScenarioSelect.php');">シナリオ選択</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swNewScenario.php');">新規シナリオ</a></li>
+      <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swScenarioImport.php');">シナリオを読み込む（インポート）</a></li>
       <li><a class="dropdown-item" href="#" onclick="AjaxFunc_EditMenuJump($TargetForm,'./swUserOption.php')">オプション設定</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" href="#"><p style="color: #a9a9a9;align: center;">パスワード変更</p></a></li>
@@ -38,7 +39,7 @@ END_OF_HTML;
       <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swScenarioSelect.php');">シナリオ選択</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swNewScenario.php');">新規シナリオ</a></li>
-      <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swScenarioImport.php');">作品ファイル(.scwd)を読み込む</a></li>
+      <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swScenarioImport.php');">シナリオを読み込む（インポート）</a></li>
       <li><a class="dropdown-item" href="#" onclick="AjaxFunc_EditMenuJump($TargetForm,'./swUserOption.php')">オプション設定</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" href="#" onclick="AjaxFunc_SubmitNoMsg($TargetForm,'./swUserChangePassword.php');">パスワード変更</a></li>

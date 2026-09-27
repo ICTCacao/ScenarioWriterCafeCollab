@@ -105,7 +105,9 @@ function fncMainForm($mySqlConnObj){
 
 END_OF_HTML;
 	include_once("./include/swMenuBar.php");
-	swMenuBar_Print('./include/swDropDownMenu.php', 'frmSwScenario', 'シナリオ選択', array(), $fdtUserName);
+	swMenuBar_Print('./include/swDropDownMenu.php', 'frmSwScenario', 'シナリオ選択', array(
+		array('label'=>'シナリオを読み込む（.scwd）', 'onclick'=>"AjaxFunc_SubmitNoMsg(document.frmSwScenario,'./swScenarioImport.php');"),
+	), $fdtUserName);
 	print <<<END_OF_HTML
 		
 		<!-- main -->
